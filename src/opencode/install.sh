@@ -3,8 +3,8 @@ set -e
 
 #-----------------------------------------------------------------------------------------------------
 # OpenCode Dev Container Feature
-# Installs: opencode-ai, rtk, @fission-ai/openspec
-# Intended for use on Debian/Ubuntu-based images with Node.js/npm pre-installed
+# Installs: opencode-ai, rtk
+# Intended for use on Debian/Ubuntu-based images. Does not require Node.js.
 #-----------------------------------------------------------------------------------------------------
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -14,7 +14,6 @@ fi
 
 OPENCODE_VERSION="${VERSION:-latest}"
 INSTALL_RTK="${INSTALLRTK:-true}"
-INSTALL_OPENSPEC="${INSTALLOPENSPEC:-true}"
 
 ARCH=$(uname -m)
 case "${ARCH}" in
@@ -36,38 +35,6 @@ apt-get update
 apt-get install -y --no-install-recommends curl jq git
 rm -rf /var/lib/apt/lists/*
 
-echo "==> Configuring npm global prefix..."
-NPM_GLOBAL_PREFIX="/usr/local/share/npm-global"
-mkdir -p "${NPM_GLOBAL_PREFIX}"
-npm config set prefix "${NPM_GLOBAL_PREFIX}"
-
-export PNPM_HOME="/usr/local/share/pnpm"
-mkdir -p "${PNPM_HOME}"
-export PATH="${PNPM_HOME}:${PATH}"
-
-PROFILE_SCRIPT="/etc/profile.d/opencode.sh"
-cat > "${PROFILE_SCRIPT}" << EOF
-export NPM_CONFIG_PREFIX=${NPM_GLOBAL_PREFIX}
-export PNPM_HOME=${PNPM_HOME}
-export PNPM_STORE_DIR=/usr/local/share/pnpm-store
-export PATH=${NPM_GLOBAL_PREFIX}/bin:${PNPM_HOME}:/usr/local/bin:\${PATH}
-EOF
-chmod +x "${PROFILE_SCRIPT}"
-
-# Ensure pnpm is available (install via npm if missing)
-if ! command -v pnpm &> /dev/null; then
-    echo "==> pnpm not found, installing pnpm..."
-    npm install -g pnpm@10
-    export SHELL=/bin/bash
-    pnpm setup
-fi
-pnpm --version
-
-echo "==> Configuring pnpm store directory..."
-PNPM_STORE="/usr/local/share/pnpm-store"
-mkdir -p "${PNPM_STORE}"
-pnpm config set store-dir "${PNPM_STORE}"
-
 # ------------------------------------------------------------------
 # Install rtk (optional)
 # ------------------------------------------------------------------
@@ -83,16 +50,6 @@ else
 fi
 
 # ------------------------------------------------------------------
-# Install @fission-ai/openspec (optional)
-# ------------------------------------------------------------------
-if [ "${INSTALL_OPENSPEC}" = "true" ]; then
-    echo "==> Installing @fission-ai/openspec..."
-    pnpm install -g "@fission-ai/openspec@latest"
-else
-    echo "==> Skipping @fission-ai/openspec installation."
-fi
-
-# ------------------------------------------------------------------
 # Install opencode
 # ------------------------------------------------------------------
 echo "==> Installing opencode..."
@@ -104,7 +61,7 @@ ln -sf "${OPENCODE_INSTALL_HOME}/.opencode/bin/opencode" /usr/local/bin/opencode
 opencode --version
 
 echo "==> Adjusting permissions for ${_REMOTE_USER} user..."
-chown -R "${_REMOTE_USER}:${_REMOTE_USER}" /usr/local/share/pnpm /usr/local/share/npm-global /usr/local/share/pnpm-store "${OPENCODE_INSTALL_HOME}" 2>/dev/null || true
+chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${OPENCODE_INSTALL_HOME}" 2>/dev/null || true
 
 echo "==> Pre-creating XDG directories for ${_REMOTE_USER} user..."
 mkdir -p "${_REMOTE_USER_HOME}/.config" "${_REMOTE_USER_HOME}/.local"

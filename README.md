@@ -8,7 +8,7 @@ A collection of [Dev Container Features](https://containers.dev/features) publis
 |----|------|-------------|-----------|
 | [`claude`](./src/claude) | Claude Code | Installs the Claude Code CLI (`@anthropic-ai/claude-code`). | `ghcr.io/synergy-shock/devcontainer/claude` |
 | [`gitbutler`](./src/gitbutler) | GitButler CLI | Installs the GitButler CLI (`but`). | `ghcr.io/synergy-shock/devcontainer/gitbutler` |
-| [`opencode`](./src/opencode) | OpenCode | Installs OpenCode AI CLI, `rtk`, and `@fission-ai/openspec`. | `ghcr.io/synergy-shock/devcontainer/opencode` |
+| [`opencode`](./src/opencode) | OpenCode | Installs the OpenCode AI CLI and `rtk`. | `ghcr.io/synergy-shock/devcontainer/opencode` |
 | [`pnpm`](./src/pnpm) | pnpm | Installs pnpm globally and configures the store and npm prefix. | `ghcr.io/synergy-shock/devcontainer/pnpm` |
 
 ## Usage

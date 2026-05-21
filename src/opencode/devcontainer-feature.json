@@ -1,9 +1,9 @@
 {
   "id": "opencode",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "name": "OpenCode",
-  "description": "Installs the OpenCode AI CLI, rtk, and @fission-ai/openspec.",
-  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/opencode",
+  "description": "Installs the OpenCode AI CLI and rtk.",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/src/opencode",
   "options": {
     "version": {
       "type": "string",
@@ -15,17 +15,6 @@
       "type": "boolean",
       "default": true,
       "description": "Install the rtk CLI."
-    },
-    "installOpenspec": {
-      "type": "boolean",
-      "default": true,
-      "description": "Install @fission-ai/openspec globally via npm."
     }
-  },
-  "containerEnv": {
-    "NPM_CONFIG_PREFIX": "/usr/local/share/npm-global",
-    "PNPM_HOME": "/usr/local/share/pnpm",
-    "PNPM_STORE_DIR": "/usr/local/share/pnpm-store",
-    "PATH": "/usr/local/share/npm-global/bin:/usr/local/share/pnpm:/usr/local/bin:${PATH}"
   }
 }
