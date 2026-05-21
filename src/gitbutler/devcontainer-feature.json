@@ -1,0 +1,15 @@
+{
+  "id": "gitbutler",
+  "version": "1.0.0",
+  "name": "GitButler CLI",
+  "description": "Installs the GitButler CLI (but).",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/gitbutler",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "0.19.12-3040",
+      "description": "Select or enter the version of the GitButler CLI (but) to install.",
+      "proposals": ["0.19.12-3040", "0.19.9-2990"]
+    }
+  }
+}

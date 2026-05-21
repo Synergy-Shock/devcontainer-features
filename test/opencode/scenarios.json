@@ -1,0 +1,16 @@
+{
+    "default": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "opencode": {}
+        }
+    },
+    "no_rtk": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "opencode": {
+                "installRtk": false
+            }
+        }
+    }
+}
