@@ -1,0 +1,16 @@
+{
+    "default": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "claude": {}
+        }
+    },
+    "pinned_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "claude": {
+                "version": "2.1.145"
+            }
+        }
+    }
+}

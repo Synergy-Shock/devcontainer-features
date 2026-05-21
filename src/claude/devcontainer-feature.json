@@ -1,0 +1,21 @@
+{
+  "id": "claude",
+  "version": "2.1.145",
+  "name": "Claude Code",
+  "description": "Installs the Claude Code CLI (@anthropic-ai/claude-code).",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/claude",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "latest",
+      "description": "Select or enter the version of @anthropic-ai/claude-code to install globally.",
+      "proposals": ["latest"]
+    }
+  },
+  "containerEnv": {
+    "NPM_CONFIG_PREFIX": "/usr/local/share/npm-global",
+    "PNPM_HOME": "/usr/local/share/pnpm",
+    "PNPM_STORE_DIR": "/usr/local/share/pnpm-store",
+    "PATH": "/usr/local/share/npm-global/bin:/usr/local/share/pnpm:/usr/local/bin:${PATH}"
+  }
+}
