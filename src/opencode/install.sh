@@ -18,10 +18,10 @@ INSTALL_RTK="${INSTALLRTK:-true}"
 ARCH=$(uname -m)
 case "${ARCH}" in
     x86_64)
-        RTK_ARCH="x86_64"
+        RTK_TARGET="x86_64-unknown-linux-musl"
         ;;
     aarch64|arm64)
-        RTK_ARCH="aarch64"
+        RTK_TARGET="aarch64-unknown-linux-gnu"
         ;;
     *)
         echo "(!) Architecture ${ARCH} is not supported for rtk."
@@ -41,7 +41,7 @@ rm -rf /var/lib/apt/lists/*
 if [ "${INSTALL_RTK}" = "true" ]; then
     echo "==> Installing rtk..."
     RTK_LATEST=$(curl -fsSL https://api.github.com/repos/rtk-ai/rtk/releases/latest | jq -r '.tag_name')
-    RTK_URL="https://github.com/rtk-ai/rtk/releases/download/${RTK_LATEST}/rtk-${RTK_ARCH}-unknown-linux-gnu.tar.gz"
+    RTK_URL="https://github.com/rtk-ai/rtk/releases/download/${RTK_LATEST}/rtk-${RTK_TARGET}.tar.gz"
     curl -fsSL "${RTK_URL}" | tar -xz -C /usr/local/bin rtk
     chmod +x /usr/local/bin/rtk
     rtk --version
