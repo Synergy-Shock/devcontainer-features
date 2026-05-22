@@ -1,6 +1,6 @@
 ## OS support
 
-Debian/Ubuntu-based images. The feature only relies on `curl` and `git` — no Node.js or `npm` required.
+Debian/Ubuntu-based images. The feature only relies on `curl`, `jq`, and `git` — no Node.js or `npm` required.
 
 ## What gets installed
 

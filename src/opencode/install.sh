@@ -17,7 +17,7 @@ OPENCODE_VERSION="${VERSION:-latest}"
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get install -y --no-install-recommends curl git
+apt-get install -y --no-install-recommends curl jq git
 rm -rf /var/lib/apt/lists/*
 
 # ------------------------------------------------------------------
