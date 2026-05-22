@@ -12,7 +12,7 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-PNPM_VERSION="${VERSION:-10}"
+PNPM_VERSION="${VERSION:-11}"
 
 export DEBIAN_FRONTEND=noninteractive
 
