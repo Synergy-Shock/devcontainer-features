@@ -1,23 +1,31 @@
 {
-    "default": {
-        "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
-        "features": {
-            "pnpm": {}
-        }
-    },
-    "pnpm_9": {
-        "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
-        "features": {
-            "pnpm": {
-                "version": "9"
-            }
-        }
-    },
-    "non_root_user": {
-        "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
-        "remoteUser": "node",
-        "features": {
-            "pnpm": {}
-        }
+  "default": {
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+    "features": {
+      "pnpm": {}
     }
+  },
+  "pnpm_9": {
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+    "features": {
+      "pnpm": {
+        "version": "9"
+      }
+    }
+  },
+  "pnpm_10": {
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+    "features": {
+      "pnpm": {
+        "version": "10"
+      }
+    }
+  },
+  "non_root_user": {
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+    "remoteUser": "node",
+    "features": {
+      "pnpm": {}
+    }
+  }
 }
