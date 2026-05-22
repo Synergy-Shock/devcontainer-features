@@ -9,12 +9,6 @@ check "but --version"    bash -c 'but --version'
 
 check "but setup as node" bash -c '
   set -e
-  # Simulate a real devcontainer where another root-running feature has already
-  # created ~/.local/share, leaving it root-owned. `but setup` writes to
-  # ~/.local/share/com.gitbutler.app — without the install-time pre-create, the
-  # mkdir there would fail with EACCES.
-  sudo mkdir -p "$HOME/.local/share"
-  sudo chown root:root "$HOME/.local/share"
   mkdir -p "$HOME/proj"
   cd "$HOME/proj"
   git init -q

@@ -19,5 +19,13 @@
             "claude": {},
             "rtk": {}
         }
+    },
+    "opencode_and_gitbutler_non_root": {
+        "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+        "remoteUser": "node",
+        "features": {
+            "opencode": {},
+            "gitbutler": {}
+        }
     }
 }
