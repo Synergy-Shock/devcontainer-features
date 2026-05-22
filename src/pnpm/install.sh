@@ -26,7 +26,7 @@ mkdir -p "${NPM_GLOBAL_PREFIX}"
 npm config set prefix "${NPM_GLOBAL_PREFIX}"
 
 export PNPM_HOME="/usr/local/share/pnpm"
-mkdir -p "${PNPM_HOME}"
+mkdir -p "${PNPM_HOME}/bin"
 export PATH="${PNPM_HOME}:${PATH}"
 
 PROFILE_SCRIPT="/etc/profile.d/pnpm.sh"
@@ -49,7 +49,11 @@ PNPM_STORE="/usr/local/share/pnpm-store"
 mkdir -p "${PNPM_STORE}"
 pnpm config set store-dir "${PNPM_STORE}"
 
-echo "==> Adjusting permissions for ${_REMOTE_USER} user..."
-chown -R "${_REMOTE_USER}:${_REMOTE_USER}" /usr/local/share/pnpm /usr/local/share/npm-global /usr/local/share/pnpm-store 2>/dev/null || true
+REMOTE_USER="${_REMOTE_USER:-root}"
+echo "==> Adjusting permissions for ${REMOTE_USER} user..."
+chown -R "${REMOTE_USER}:${REMOTE_USER}" \
+    /usr/local/share/pnpm \
+    /usr/local/share/npm-global \
+    /usr/local/share/pnpm-store
 
 echo "==> pnpm feature installation complete!"
