@@ -18,7 +18,7 @@ Back the pnpm store with a Docker named volume and forward the host `~/.npmrc` r
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/pnpm:11": {}
+    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {}
   },
   "mounts": [
     "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",

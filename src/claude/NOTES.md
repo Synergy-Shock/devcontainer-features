@@ -14,7 +14,7 @@ Bind `~/.claude` and `~/.claude.json` from the host so login state, project hist
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/claude:2": {}
+    "ghcr.io/synergy-shock/devcontainer-features/claude:2": {}
   },
   "mounts": [
     "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind",

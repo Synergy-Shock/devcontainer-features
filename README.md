@@ -6,11 +6,11 @@ A collection of [Dev Container Features](https://containers.dev/features) publis
 
 | ID | Name | Description | Reference |
 |----|------|-------------|-----------|
-| [`claude`](./src/claude) | Claude Code | Installs the Claude Code CLI (`@anthropic-ai/claude-code`). | `ghcr.io/synergy-shock/devcontainer/claude` |
-| [`gitbutler`](./src/gitbutler) | GitButler CLI | Installs the GitButler CLI (`but`). | `ghcr.io/synergy-shock/devcontainer/gitbutler` |
-| [`opencode`](./src/opencode) | OpenCode | Installs the OpenCode AI CLI. | `ghcr.io/synergy-shock/devcontainer/opencode` |
-| [`pnpm`](./src/pnpm) | pnpm | Installs pnpm globally and configures the store and npm prefix. | `ghcr.io/synergy-shock/devcontainer/pnpm` |
-| [`rtk`](./src/rtk) | rtk (Rust Token Killer) | Installs the `rtk` CLI proxy. Pairs with `claude` and/or `opencode`. | `ghcr.io/synergy-shock/devcontainer/rtk` |
+| [`claude`](./src/claude) | Claude Code | Installs the Claude Code CLI (`@anthropic-ai/claude-code`). | `ghcr.io/synergy-shock/devcontainer-features/claude` |
+| [`gitbutler`](./src/gitbutler) | GitButler CLI | Installs the GitButler CLI (`but`). | `ghcr.io/synergy-shock/devcontainer-features/gitbutler` |
+| [`opencode`](./src/opencode) | OpenCode | Installs the OpenCode AI CLI. | `ghcr.io/synergy-shock/devcontainer-features/opencode` |
+| [`pnpm`](./src/pnpm) | pnpm | Installs pnpm globally and configures the store and npm prefix. | `ghcr.io/synergy-shock/devcontainer-features/pnpm` |
+| [`rtk`](./src/rtk) | rtk (Rust Token Killer) | Installs the `rtk` CLI proxy. Pairs with `claude` and/or `opencode`. | `ghcr.io/synergy-shock/devcontainer-features/rtk` |
 
 ## Usage
 
@@ -20,11 +20,11 @@ Reference a feature from any `devcontainer.json` by its GHCR URL and version tag
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/pnpm:11": {},
-    "ghcr.io/synergy-shock/devcontainer/claude:2": {},
-    "ghcr.io/synergy-shock/devcontainer/opencode:1": {},
-    "ghcr.io/synergy-shock/devcontainer/rtk:0": {},
-    "ghcr.io/synergy-shock/devcontainer/gitbutler:0": {}
+    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {},
+    "ghcr.io/synergy-shock/devcontainer-features/claude:2": {},
+    "ghcr.io/synergy-shock/devcontainer-features/opencode:1": {},
+    "ghcr.io/synergy-shock/devcontainer-features/rtk:0": {},
+    "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {}
   }
 }
 ```
@@ -50,7 +50,7 @@ Mount the host's `~/.npmrc` readonly so the container inherits your registry, au
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/pnpm:11": {}
+    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {}
   },
   "mounts": [
     "source=${localEnv:HOME}/.npmrc,target=/home/node/.npmrc,type=bind,readonly",
@@ -70,7 +70,7 @@ Back the pnpm store with a Docker named volume so every devcontainer on the host
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/pnpm:11": {}
+    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {}
   },
   "mounts": [
     "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",
@@ -90,7 +90,7 @@ On macOS, Docker Desktop forwards the host SSH agent socket to `/run/host-servic
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/claude:2": {}
+    "ghcr.io/synergy-shock/devcontainer-features/claude:2": {}
   },
   "mounts": [
     "source=/run/host-services/ssh-auth.sock,target=/agent.sock,type=bind",
@@ -151,7 +151,7 @@ CI runs all three of these in `.github/workflows/test.yaml` on every push and PR
 1. Bump `version` in `src/<id>/devcontainer-feature.json` for any feature you changed. Follow SemVer.
 2. Merge the PR to `main`.
 3. From the **Actions** tab, run the **Release features** workflow (`workflow_dispatch`). It will:
-   - publish each feature to `ghcr.io/synergy-shock/devcontainer/<id>` with the new version tag
+   - publish each feature to `ghcr.io/synergy-shock/devcontainer-features/<id>` with the new version tag
    - open a follow-up PR with auto-generated `src/<id>/README.md` updates
 4. **First-time only**, visit <https://github.com/orgs/Synergy-Shock/packages> (or your account `?tab=packages` if published under a user namespace), open each new package, and change its visibility to **public**. GHCR publishes private by default.
 

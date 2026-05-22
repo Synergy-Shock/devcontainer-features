@@ -24,7 +24,7 @@ GitButler shells out to `git` for fetch/push/sign, so it needs the host's SSH ag
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/gitbutler:0": {}
+    "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {}
   },
   "mounts": [
     "source=/run/host-services/ssh-auth.sock,target=/agent.sock,type=bind",

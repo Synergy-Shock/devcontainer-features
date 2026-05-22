@@ -7,7 +7,7 @@ Installs the GitButler CLI (but).
 
 ```json
 "features": {
-    "ghcr.io/synergy-shock/devcontainer/gitbutler:0": {}
+    "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {}
 }
 ```
 
@@ -35,6 +35,26 @@ Binaries come from `https://releases.gitbutler.com/releases/release/<version>/li
 
 By default (`version: latest`) the install script queries `https://app.gitbutler.com/api/downloads?channel=release&limit=1` and installs the newest stable `build_version` it returns. Pass an explicit `build_version` (e.g. `0.19.13-3047`) to skip the lookup and pin the install — useful for byte-reproducible images or air-gapped rebuilds.
 
+## Sign commits with the host SSH agent (macOS + 1Password)
+
+GitButler shells out to `git` for fetch/push/sign, so it needs the host's SSH agent and signing helper. Forward Docker Desktop's SSH socket and bind-mount `op-ssh-sign` readonly so commits get signed against your 1Password key without copying private material into the container.
+
+```jsonc
+{
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+  "features": {
+    "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {}
+  },
+  "mounts": [
+    "source=/run/host-services/ssh-auth.sock,target=/agent.sock,type=bind",
+    "source=/Applications/1Password.app/Contents/MacOS/op-ssh-sign,target=/op-ssh-sign,type=bind,readonly"
+  ],
+  "containerEnv": {
+    "SSH_AUTH_SOCK": "/agent.sock"
+  }
+}
+```
+
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer/blob/main/src/gitbutler/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer-features/blob/main/src/gitbutler/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

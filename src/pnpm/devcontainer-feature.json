@@ -3,7 +3,7 @@
   "version": "11.0.0",
   "name": "pnpm",
   "description": "Installs pnpm globally and configures the pnpm store directory and npm global prefix.",
-  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/pnpm",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/pnpm",
   "options": {
     "version": {
       "type": "string",

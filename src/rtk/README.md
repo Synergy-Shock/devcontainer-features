@@ -7,7 +7,7 @@ Installs the rtk CLI proxy.
 
 ```json
 "features": {
-    "ghcr.io/synergy-shock/devcontainer/rtk:0": {}
+    "ghcr.io/synergy-shock/devcontainer-features/rtk:0": {}
 }
 ```
 
@@ -35,4 +35,4 @@ Composes naturally with the `claude` and `opencode` features in the same `devcon
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer/blob/main/src/rtk/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer-features/blob/main/src/rtk/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

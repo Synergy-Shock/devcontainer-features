@@ -3,7 +3,7 @@
   "version": "2.1.145",
   "name": "Claude Code",
   "description": "Installs the Claude Code CLI (@anthropic-ai/claude-code).",
-  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/claude",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/claude",
   "options": {
     "version": {
       "type": "string",
