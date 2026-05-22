@@ -5,7 +5,8 @@
             "pnpm": {},
             "gitbutler": {},
             "opencode": {},
-            "claude": {}
+            "claude": {},
+            "rtk": {}
         }
     }
 }
