@@ -20,11 +20,11 @@ Reference a feature from any `devcontainer.json` by its GHCR URL and version tag
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "ghcr.io/synergy-shock/devcontainer/pnpm:1": {},
+    "ghcr.io/synergy-shock/devcontainer/pnpm:11": {},
     "ghcr.io/synergy-shock/devcontainer/claude:2": {},
-    "ghcr.io/synergy-shock/devcontainer/opencode:3": {},
-    "ghcr.io/synergy-shock/devcontainer/rtk:1": {},
-    "ghcr.io/synergy-shock/devcontainer/gitbutler:1": {}
+    "ghcr.io/synergy-shock/devcontainer/opencode:1": {},
+    "ghcr.io/synergy-shock/devcontainer/rtk:0": {},
+    "ghcr.io/synergy-shock/devcontainer/gitbutler:0": {}
   }
 }
 ```
