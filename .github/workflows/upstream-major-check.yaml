@@ -1,0 +1,99 @@
+name: "Upstream major-version check"
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/upstream-major-check.yaml
+      - scripts/check-upstream-majors.sh
+      - upstream-versions.json
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    name: "Check upstream majors"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Detect upstream major bumps
+        id: detect
+        run: |
+          bumps_json=$(./scripts/check-upstream-majors.sh)
+          {
+            echo "bumps<<__EOF__"
+            echo "$bumps_json"
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open / update tracking issues
+        if: github.event_name != 'pull_request' && steps.detect.outputs.bumps != '[]'
+        uses: actions/github-script@v7
+        env:
+          BUMPS: ${{ steps.detect.outputs.bumps }}
+        with:
+          script: |
+            const bumps = JSON.parse(process.env.BUMPS);
+            const LABEL = 'upstream-major-bump';
+
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: LABEL,
+                color: 'B60205',
+                description: 'Upstream tool released a new major version',
+              });
+            } catch (e) {
+              if (e.status !== 422) throw e;
+            }
+
+            for (const b of bumps) {
+              const title = `[upstream-bump] ${b.feature}: v${b.baseline_major}.x → v${b.latest_major}.x`;
+              const body = [
+                `Upstream **${b.feature}** (\`${b.ref}\` via \`${b.source}\`) has released a new major version.`,
+                '',
+                '| | |',
+                '|---|---|',
+                `| Baseline major (in \`upstream-versions.json\`) | \`${b.baseline_major}\` |`,
+                `| Current latest upstream version | \`${b.latest_version}\` |`,
+                `| Current upstream major | \`${b.latest_major}\` |`,
+                '',
+                '**Next steps**',
+                `1. Review upstream release notes for breaking changes.`,
+                `2. Run \`devcontainer features test -f ${b.feature} -p .\` against the supported base images.`,
+                `3. If we adopt the new major, bump \`src/${b.feature}/devcontainer-feature.json\` (SemVer) **and** set \`features.${b.feature}.major\` in \`upstream-versions.json\` to \`${b.latest_major}\` in the same PR. Closing this issue.`,
+                '',
+                '_Opened automatically by `.github/workflows/upstream-major-check.yaml`._',
+              ].join('\n');
+
+              const search = await github.rest.search.issuesAndPullRequests({
+                q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open label:"${LABEL}" in:title "[upstream-bump] ${b.feature}:"`,
+              });
+              const existing = search.data.items[0];
+
+              if (existing) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  title,
+                  body,
+                });
+                core.info(`Updated existing issue #${existing.number} for ${b.feature}`);
+              } else {
+                const created = await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title,
+                  body,
+                  labels: [LABEL],
+                });
+                core.info(`Opened issue #${created.data.number} for ${b.feature}`);
+              }
+            }

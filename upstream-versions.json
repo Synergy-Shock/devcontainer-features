@@ -1,0 +1,30 @@
+{
+  "$schema-note": "Baseline major versions for each feature's upstream. Update when accepting an upstream major bump. null = unseeded; the workflow will record the observed major without alerting.",
+  "features": {
+    "claude": {
+      "major": 2,
+      "source": "npm",
+      "ref": "@anthropic-ai/claude-code"
+    },
+    "gitbutler": {
+      "major": 0,
+      "source": "gitbutler-api",
+      "ref": "release"
+    },
+    "opencode": {
+      "major": 1,
+      "source": "npm",
+      "ref": "opencode-ai"
+    },
+    "pnpm": {
+      "major": 11,
+      "source": "npm",
+      "ref": "pnpm"
+    },
+    "rtk": {
+      "major": 0,
+      "source": "github",
+      "ref": "rtk-ai/rtk"
+    }
+  }
+}

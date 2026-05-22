@@ -84,6 +84,18 @@ CI runs all three of these in `.github/workflows/test.yaml` on every push and PR
    - open a follow-up PR with auto-generated `src/<id>/README.md` updates
 4. **First-time only**, visit <https://github.com/orgs/Synergy-Shock/packages> (or your account `?tab=packages` if published under a user namespace), open each new package, and change its visibility to **public**. GHCR publishes private by default.
 
+## Upstream version tracking
+
+A daily scheduled workflow (`.github/workflows/upstream-major-check.yaml`) checks every feature's upstream for a new **major** version and opens a tracking issue (label: `upstream-major-bump`) when one is detected.
+
+- Baselines live in [`upstream-versions.json`](./upstream-versions.json) at the repo root.
+- On first run for a feature (`"major": null`), the workflow records the observed major to its log and emits a warning with the diff — copy that diff into a follow-up PR to seed the baseline.
+- When you adopt a new upstream major, bump `src/<id>/devcontainer-feature.json` **and** set `features.<id>.major` in `upstream-versions.json` to the new major in the same PR. Reference the tracking issue from the PR so it auto-closes.
+- You can dry-run the detection script locally — it has no GitHub dependency:
+  ```bash
+  ./scripts/check-upstream-majors.sh 2>/dev/null | jq .
+  ```
+
 ## Contributing
 
 - Author hand-written context in `src/<id>/NOTES.md` — it gets concatenated into the auto-generated `README.md` so consumers see it.
