@@ -2,12 +2,12 @@
 set -e
 source dev-container-features-test-lib
 
-check "whoami is node" bash -c '[ "$(whoami)" = "node" ]'
+check "whoami is vscode" bash -c '[ "$(whoami)" = "vscode" ]'
 check "home writable"    bash -c 'touch "$HOME/.rwtest" && rm "$HOME/.rwtest"'
 check "but on PATH"      bash -c 'command -v but'
 check "but --version"    bash -c 'but --version'
 
-check "but setup as node" bash -c '
+check "but setup as vscode" bash -c '
   set -e
   mkdir -p "$HOME/proj"
   cd "$HOME/proj"

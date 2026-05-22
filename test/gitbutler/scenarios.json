@@ -7,7 +7,7 @@
   },
   "non_root_user": {
     "image": "mcr.microsoft.com/devcontainers/base:trixie",
-    "remoteUser": "node",
+    "remoteUser": "vscode",
     "features": {
       "gitbutler": {}
     }
