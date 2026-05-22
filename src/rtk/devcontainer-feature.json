@@ -1,6 +1,6 @@
 {
   "id": "rtk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "name": "rtk (Rust Token Killer)",
   "description": "Installs the rtk CLI proxy.",
   "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/src/rtk",
