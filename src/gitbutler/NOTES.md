@@ -11,3 +11,7 @@ The feature installs `curl`, `libc6`, and `libdbus-1-3`, then downloads the preb
 ## Source
 
 Binaries come from `https://releases.gitbutler.com/releases/release/<version>/linux/<arch>/but` and are installed to `/usr/local/bin/but`.
+
+## Version resolution
+
+By default (`version: latest`) the install script queries `https://app.gitbutler.com/api/downloads?channel=release&limit=1` and installs the newest stable `build_version` it returns. Pass an explicit `build_version` (e.g. `0.19.13-3047`) to skip the lookup and pin the install — useful for byte-reproducible images or air-gapped rebuilds.

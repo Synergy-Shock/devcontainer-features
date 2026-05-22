@@ -12,7 +12,7 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-BUT_VERSION="${VERSION:-0.19.12-3040}"
+BUT_VERSION="${VERSION:-latest}"
 
 ARCH=$(uname -m)
 case "${ARCH}" in
@@ -31,8 +31,19 @@ esac
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get install -y --no-install-recommends curl libc6 libdbus-1-3
+apt-get install -y --no-install-recommends curl jq libc6 libdbus-1-3
 rm -rf /var/lib/apt/lists/*
+
+if [ "${BUT_VERSION}" = "latest" ]; then
+    echo "==> Resolving latest stable GitButler build..."
+    BUT_VERSION=$(curl -fsSL 'https://app.gitbutler.com/api/downloads?channel=release&limit=1' \
+        | jq -r '.[0].build_version')
+    if [ -z "${BUT_VERSION}" ] || [ "${BUT_VERSION}" = "null" ]; then
+        echo "(!) Failed to resolve latest GitButler version from app.gitbutler.com/api/downloads"
+        exit 1
+    fi
+    echo "==> Resolved latest = ${BUT_VERSION}"
+fi
 
 echo "==> Installing GitButler CLI (but) v${BUT_VERSION} for ${BUT_ARCH}..."
 BUT_URL="https://releases.gitbutler.com/releases/release/${BUT_VERSION}/linux/${BUT_ARCH}/but"
