@@ -2,11 +2,11 @@
   "name": "Devcontainer Features",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
   "features": {
-    "../src/pnpm": {},
-    "../src/gitbutler": {},
-    // "../src/opencode": {},
-    "../src/rtk": {},
-    "../src/claude": {},
+    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {},
+    "ghcr.io/synergy-shock/devcontainer-features/claude:2": {},
+    // "ghcr.io/synergy-shock/devcontainer-features/opencode:1": {},
+    "ghcr.io/synergy-shock/devcontainer-features/rtk:0": {},
+    "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {},
   },
   "mounts": [
     "source=pnpm-store,target=/home/node/.pnpm-store,type=volume",
