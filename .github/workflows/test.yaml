@@ -14,14 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # pnpm requires Node — only typescript-node:24 has it.
-          - feature: pnpm
-            base-image: mcr.microsoft.com/devcontainers/typescript-node:24-trixie
-          - feature: pnpm
-            base-image: mcr.microsoft.com/devcontainers/typescript-node:24-bookworm
-          - feature: pnpm
-            base-image: mcr.microsoft.com/devcontainers/typescript-node:24-bullseye
-
           # claude / gitbutler / opencode are Node-less — test on the bare base
           # across all current Debian + Ubuntu LTS releases.
           - feature: claude
@@ -95,7 +87,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        feature: [claude, gitbutler, opencode, pnpm]
+        feature: [claude, gitbutler, opencode]
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6

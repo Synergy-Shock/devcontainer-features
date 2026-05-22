@@ -2,7 +2,6 @@
     "all_features": {
         "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
         "features": {
-            "pnpm": {},
             "gitbutler": {},
             "opencode": {},
             "claude": {},
@@ -13,7 +12,6 @@
         "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
         "remoteUser": "node",
         "features": {
-            "pnpm": {},
             "gitbutler": {},
             "opencode": {},
             "claude": {},
