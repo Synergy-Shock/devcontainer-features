@@ -3,7 +3,7 @@ set -e
 
 #-----------------------------------------------------------------------------------------------------
 # OpenCode Dev Container Feature
-# Installs: opencode-ai, rtk
+# Installs: opencode-ai
 # Intended for use on Debian/Ubuntu-based images. Does not require Node.js.
 #-----------------------------------------------------------------------------------------------------
 
@@ -13,41 +13,12 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 OPENCODE_VERSION="${VERSION:-latest}"
-INSTALL_RTK="${INSTALLRTK:-true}"
-
-ARCH=$(uname -m)
-case "${ARCH}" in
-    x86_64)
-        RTK_TARGET="x86_64-unknown-linux-musl"
-        ;;
-    aarch64|arm64)
-        RTK_TARGET="aarch64-unknown-linux-gnu"
-        ;;
-    *)
-        echo "(!) Architecture ${ARCH} is not supported for rtk."
-        exit 1
-        ;;
-esac
 
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get install -y --no-install-recommends curl jq git
+apt-get install -y --no-install-recommends curl git
 rm -rf /var/lib/apt/lists/*
-
-# ------------------------------------------------------------------
-# Install rtk (optional)
-# ------------------------------------------------------------------
-if [ "${INSTALL_RTK}" = "true" ]; then
-    echo "==> Installing rtk..."
-    RTK_LATEST=$(curl -fsSL https://api.github.com/repos/rtk-ai/rtk/releases/latest | jq -r '.tag_name')
-    RTK_URL="https://github.com/rtk-ai/rtk/releases/download/${RTK_LATEST}/rtk-${RTK_TARGET}.tar.gz"
-    curl -fsSL "${RTK_URL}" | tar -xz -C /usr/local/bin rtk
-    chmod +x /usr/local/bin/rtk
-    rtk --version
-else
-    echo "==> Skipping rtk installation."
-fi
 
 # ------------------------------------------------------------------
 # Install opencode

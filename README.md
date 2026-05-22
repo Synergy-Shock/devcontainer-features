@@ -8,8 +8,9 @@ A collection of [Dev Container Features](https://containers.dev/features) publis
 |----|------|-------------|-----------|
 | [`claude`](./src/claude) | Claude Code | Installs the Claude Code CLI (`@anthropic-ai/claude-code`). | `ghcr.io/synergy-shock/devcontainer/claude` |
 | [`gitbutler`](./src/gitbutler) | GitButler CLI | Installs the GitButler CLI (`but`). | `ghcr.io/synergy-shock/devcontainer/gitbutler` |
-| [`opencode`](./src/opencode) | OpenCode | Installs the OpenCode AI CLI and `rtk`. | `ghcr.io/synergy-shock/devcontainer/opencode` |
+| [`opencode`](./src/opencode) | OpenCode | Installs the OpenCode AI CLI. | `ghcr.io/synergy-shock/devcontainer/opencode` |
 | [`pnpm`](./src/pnpm) | pnpm | Installs pnpm globally and configures the store and npm prefix. | `ghcr.io/synergy-shock/devcontainer/pnpm` |
+| [`rtk`](./src/rtk) | rtk (Rust Token Killer) | Installs the `rtk` CLI proxy. Pairs with `claude` and/or `opencode`. | `ghcr.io/synergy-shock/devcontainer/rtk` |
 
 ## Usage
 
@@ -21,9 +22,8 @@ Reference a feature from any `devcontainer.json` by its GHCR URL and version tag
   "features": {
     "ghcr.io/synergy-shock/devcontainer/pnpm:1": {},
     "ghcr.io/synergy-shock/devcontainer/claude:2": {},
-    "ghcr.io/synergy-shock/devcontainer/opencode:2": {
-      "installRtk": true
-    },
+    "ghcr.io/synergy-shock/devcontainer/opencode:3": {},
+    "ghcr.io/synergy-shock/devcontainer/rtk:1": {},
     "ghcr.io/synergy-shock/devcontainer/gitbutler:1": {}
   }
 }
@@ -33,7 +33,7 @@ Version tags follow the `MAJOR`, `MAJOR.MINOR`, and `MAJOR.MINOR.PATCH` aliases 
 
 ## Local development
 
-This repo's own `.devcontainer/devcontainer.json` composes all four features from `../src/<id>` so contributors can iterate on the install scripts in-place. Open the repo in VS Code Dev Containers, or run:
+This repo's own `.devcontainer/devcontainer.json` composes features from `../src/<id>` so contributors can iterate on the install scripts in-place. Open the repo in VS Code Dev Containers, or run:
 
 ```bash
 devcontainer up --workspace-folder .

@@ -1,8 +1,8 @@
 {
   "id": "opencode",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "name": "OpenCode",
-  "description": "Installs the OpenCode AI CLI and (optionally) rtk.",
+  "description": "Installs the OpenCode AI CLI.",
   "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/opencode",
   "options": {
     "version": {
@@ -10,11 +10,6 @@
       "default": "latest",
       "description": "Version selector (currently unused by the curl installer).",
       "proposals": ["latest"]
-    },
-    "installRtk": {
-      "type": "boolean",
-      "default": true,
-      "description": "Install the rtk CLI."
     }
   }
 }
