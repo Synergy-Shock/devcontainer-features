@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "name": "rtk (Rust Token Killer)",
   "description": "Installs the rtk CLI proxy.",
-  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/src/rtk",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/rtk",
   "options": {
     "version": {
       "type": "string",

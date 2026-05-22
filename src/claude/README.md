@@ -1,3 +1,22 @@
+
+# Claude Code (claude)
+
+Installs the Claude Code CLI (@anthropic-ai/claude-code).
+
+## Example Usage
+
+```json
+"features": {
+    "ghcr.io/synergy-shock/devcontainer-features/claude:2": {}
+}
+```
+
+## Options
+
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+| version | Select or enter the version of @anthropic-ai/claude-code to install globally. | string | latest |
+
 ## OS support
 
 Debian/Ubuntu-based images. The feature uses `apt-get` to install `curl`, `ca-certificates`, and `git`, then runs the official installer from `https://claude.ai/install.sh`.
@@ -22,3 +41,7 @@ Bind `~/.claude` and `~/.claude.json` from the host so login state, project hist
   ]
 }
 ```
+
+---
+
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer-features/blob/main/src/claude/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

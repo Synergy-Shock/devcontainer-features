@@ -1,3 +1,22 @@
+
+# GitButler CLI (gitbutler)
+
+Installs the GitButler CLI (but).
+
+## Example Usage
+
+```json
+"features": {
+    "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {}
+}
+```
+
+## Options
+
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+| version | Version of the GitButler CLI (but) to install. Use 'latest' to resolve the newest stable build_version at install time from https://app.gitbutler.com/api/downloads, or pin an explicit build_version (e.g. '0.19.13-3047') for byte-reproducible images. | string | latest |
+
 ## OS support
 
 Debian/Ubuntu-based images with **glibc ≥ 2.32**. Verified on Debian 12+ (bookworm, trixie) and Ubuntu 22.04+ (jammy, noble). The upstream `but` binary links against newer glibc symbols, so older distros — notably Debian 11 (bullseye) and Ubuntu 20.04 (focal) — are not supported and will fail at load time with `GLIBC_2.32 not found`.
@@ -35,3 +54,7 @@ GitButler shells out to `git` for fetch/push/sign, so it needs the host's SSH ag
   }
 }
 ```
+
+---
+
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer-features/blob/main/src/gitbutler/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

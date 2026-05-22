@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "name": "GitButler CLI",
   "description": "Installs the GitButler CLI (but).",
-  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/features/gitbutler",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/gitbutler",
   "options": {
     "version": {
       "type": "string",

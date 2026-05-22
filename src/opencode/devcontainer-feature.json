@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "name": "OpenCode",
   "description": "Installs the OpenCode AI CLI.",
-  "documentationURL": "https://github.com/Synergy-Shock/devcontainer/tree/main/src/opencode",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/opencode",
   "options": {
     "version": {
       "type": "string",

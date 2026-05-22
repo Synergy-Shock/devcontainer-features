@@ -1,3 +1,22 @@
+
+# pnpm (pnpm)
+
+Installs pnpm globally and configures the pnpm store directory and npm global prefix.
+
+## Example Usage
+
+```json
+"features": {
+    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {}
+}
+```
+
+## Options
+
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+| version | Select or enter the version of pnpm to install globally. | string | 11 |
+
 ## OS support
 
 Debian/Ubuntu-based images with Node.js and `npm` pre-installed (e.g., the `mcr.microsoft.com/devcontainers/typescript-node` family).
@@ -30,3 +49,7 @@ Back the pnpm store with a Docker named volume and forward the host `~/.npmrc` r
   }
 }
 ```
+
+---
+
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Synergy-Shock/devcontainer-features/blob/main/src/pnpm/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
