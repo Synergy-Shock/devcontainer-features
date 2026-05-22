@@ -8,5 +8,16 @@
             "claude": {},
             "rtk": {}
         }
+    },
+    "all_features_non_root": {
+        "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+        "remoteUser": "node",
+        "features": {
+            "pnpm": {},
+            "gitbutler": {},
+            "opencode": {},
+            "claude": {},
+            "rtk": {}
+        }
     }
 }

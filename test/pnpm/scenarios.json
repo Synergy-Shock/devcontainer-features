@@ -12,5 +12,12 @@
                 "version": "9"
             }
         }
+    },
+    "non_root_user": {
+        "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+        "remoteUser": "node",
+        "features": {
+            "pnpm": {}
+        }
     }
 }
