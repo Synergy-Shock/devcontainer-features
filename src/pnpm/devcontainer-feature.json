@@ -16,6 +16,6 @@
     "NPM_CONFIG_PREFIX": "/usr/local/share/npm-global",
     "PNPM_HOME": "/usr/local/share/pnpm",
     "PNPM_STORE_DIR": "/usr/local/share/pnpm-store",
-    "PATH": "/usr/local/share/npm-global/bin:/usr/local/share/pnpm:/usr/local/bin:${PATH}"
+    "PATH": "/usr/local/share/npm-global/bin:/usr/local/share/pnpm:/usr/local/share/pnpm/bin:/usr/local/bin:${PATH}"
   }
 }

@@ -34,7 +34,7 @@ cat > "${PROFILE_SCRIPT}" << EOF
 export NPM_CONFIG_PREFIX=${NPM_GLOBAL_PREFIX}
 export PNPM_HOME=${PNPM_HOME}
 export PNPM_STORE_DIR=/usr/local/share/pnpm-store
-export PATH=${NPM_GLOBAL_PREFIX}/bin:${PNPM_HOME}:/usr/local/bin:\${PATH}
+export PATH=${NPM_GLOBAL_PREFIX}/bin:${PNPM_HOME}:${PNPM_HOME}/bin:/usr/local/bin:\${PATH}
 EOF
 chmod +x "${PROFILE_SCRIPT}"
 
