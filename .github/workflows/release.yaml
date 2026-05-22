@@ -20,35 +20,3 @@ jobs:
         with:
           publish-features: "true"
           base-path-to-features: "./src"
-          generate-docs: "true"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: "Publish per-feature releases"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          for manifest in src/*/devcontainer-feature.json; do
-            dir=$(dirname "$manifest")
-            id=$(jq -r '.id' "$manifest")
-            version=$(jq -r '.version' "$manifest")
-            tag="${id}-v${version}"
-
-            if gh release view "$tag" >/dev/null 2>&1; then
-              echo "Release $tag already exists, skipping."
-              continue
-            fi
-
-            readme="${dir}/README.md"
-            if [[ ! -f "$readme" ]]; then
-              echo "No README for $id, skipping."
-              continue
-            fi
-
-            gh release create "$tag" \
-              --target "$GITHUB_SHA" \
-              --title  "${id} v${version}" \
-              --notes-file "$readme" \
-              "$readme#${id}-README.md"
-          done
