@@ -150,9 +150,21 @@ else
         | env PNPM_VERSION="${PNPM_VER}" PNPM_HOME="${PNPM_HOME}" SHELL="/bin/bash" sh -
 fi
 
+# Locate the pnpm binary the install script wrote. pnpm v11+ uses
+# $PNPM_HOME/bin/pnpm; older versions wrote it directly to $PNPM_HOME/pnpm.
+if [ -x "${PNPM_HOME}/bin/pnpm" ]; then
+    PNPM_BIN="${PNPM_HOME}/bin/pnpm"
+elif [ -x "${PNPM_HOME}/pnpm" ]; then
+    PNPM_BIN="${PNPM_HOME}/pnpm"
+else
+    echo "(!) pnpm install did not produce a binary under ${PNPM_HOME}."
+    ls -la "${PNPM_HOME}" || true
+    exit 1
+fi
+
 # Symlink into a directory already on every shell's PATH so the binary is
 # reachable without sourcing the rc-file shim the install script writes.
-ln -sf "${PNPM_HOME}/pnpm" /usr/local/bin/pnpm
+ln -sf "${PNPM_BIN}" /usr/local/bin/pnpm
 
 pnpm --version
 
