@@ -53,16 +53,4 @@ curl -fsSL -o "${BUT_BIN}" "${BUT_URL}"
 chmod +x "${BUT_BIN}"
 "${BUT_BIN}" --version
 
-# `but setup` writes to ~/.local/share/com.gitbutler.app at runtime. If another feature
-# (or the base image) pre-created ~/.local/share as root via `mkdir -p`, that mkdir
-# fails with EACCES. Pre-create the data dir as the remote user so setup never has to
-# create a directory under a parent we may not own.
-REMOTE_USER="${_REMOTE_USER:-root}"
-REMOTE_HOME=$(getent passwd "${REMOTE_USER}" | cut -d: -f6)
-if [ -n "${REMOTE_HOME}" ] && [ -d "${REMOTE_HOME}" ]; then
-    GB_DATA_DIR="${REMOTE_HOME}/.local/share/com.gitbutler.app"
-    mkdir -p "${GB_DATA_DIR}"
-    chown -R "${REMOTE_USER}:${REMOTE_USER}" "${GB_DATA_DIR}"
-fi
-
 echo "==> GitButler feature installation complete!"

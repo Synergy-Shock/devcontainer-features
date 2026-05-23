@@ -8,6 +8,7 @@ A collection of [Dev Container Features](https://containers.dev/features) publis
 |----|------|-------------|-----------|
 | [`claude`](./src/claude) | Claude Code | Installs the Claude Code CLI (`@anthropic-ai/claude-code`). | `ghcr.io/synergy-shock/devcontainer-features/claude` |
 | [`gitbutler`](./src/gitbutler) | GitButler CLI | Installs the GitButler CLI (`but`). | `ghcr.io/synergy-shock/devcontainer-features/gitbutler` |
+| [`node`](./src/node) | Node.js | Installs Node.js from the official nodejs.org prebuilt binaries, with optional `npm` and `pnpm` pinning. NVM-free. | `ghcr.io/synergy-shock/devcontainer-features/node` |
 | [`opencode`](./src/opencode) | OpenCode | Installs the OpenCode AI CLI. | `ghcr.io/synergy-shock/devcontainer-features/opencode` |
 | [`rtk`](./src/rtk) | rtk (Rust Token Killer) | Installs the `rtk` CLI proxy. Pairs with `claude` and/or `opencode`. | `ghcr.io/synergy-shock/devcontainer-features/rtk` |
 
@@ -40,8 +41,8 @@ These features are intentionally narrow — one upstream CLI each. For everythin
 
 **Layer official features for shared tooling.** From [`ghcr.io/devcontainers/features`](https://github.com/devcontainers/features/tree/main/src):
 
-- [`node:1`](https://github.com/devcontainers/features/tree/main/src/node) — install Node + npm, and pnpm via its `pnpmVersion` option (and yarn via `installYarnUsingApt`). Prefer this over a hand-rolled pnpm feature.
-- [`common-utils:2`](https://github.com/devcontainers/features/tree/main/src/common-utils) — sudo, curl/wget, useful shells, the canonical non-root user setup. Add it when you start from a non-`devcontainers/base` image.
+- [`node:1`](https://github.com/devcontainers/features/tree/main/src/node) — install Node + npm, and pnpm via its `pnpmVersion` option (and yarn via `installYarnUsingApt`). NVM-based. Use it if you want NVM's multi-version management; reach for this repo's [`node`](./src/node) feature instead if you want a single, NVM-free Node install (official `nodejs.org` prebuilt binaries straight into `/usr/local`).
+- [`common-utils:2`](https://github.com/devcontainers/features/tree/main/src/common-utils) — sudo, curl/wget, useful shells, the canonical non-root user setup. Add it when you start from a non-`devcontainers/base` image. **Required before** this repo's `node` feature.
 - [`git:1`](https://github.com/devcontainers/features/tree/main/src/git) — newer git than what's in older distros.
 - [`git-lfs:1`](https://github.com/devcontainers/features/tree/main/src/git-lfs) — Git LFS, if your repo uses it.
 - [`github-cli:1`](https://github.com/devcontainers/features/tree/main/src/github-cli) — `gh` for PR/issue workflows and `gh auth` against the host.
@@ -106,7 +107,9 @@ Then inside the container verify the binaries you touched:
 ```bash
 claude --version
 but --version
+node --version
 opencode --version
+pnpm --version
 rtk --version
 ```
 

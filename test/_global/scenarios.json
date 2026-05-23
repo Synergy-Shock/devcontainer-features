@@ -25,5 +25,13 @@
             "opencode": {},
             "gitbutler": {}
         }
+    },
+    "common_utils_node_claude": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "node": {},
+            "claude": {}
+        }
     }
 }

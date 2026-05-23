@@ -1,0 +1,30 @@
+## OS support
+
+Debian/Ubuntu-based images. The feature does **not** call `apt-get` itself — it expects `curl`, `jq`, and `tar` to already be installed. The expected provider is [`ghcr.io/devcontainers/features/common-utils:2`](https://github.com/devcontainers/features/tree/main/src/common-utils), which must be listed **before** the `node` feature in your `devcontainer.json`. If any required command is missing, the install script aborts with a clear error pointing at `common-utils:2`.
+
+## Implementation details
+
+- **Node.js** is the official Linux prebuilt tarball from `https://nodejs.org/dist/`, extracted into `/usr/local` with `tar --strip-components=1 --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md` so that `node`, `npm`, and `npx` land directly under `/usr/local/bin` — already on every shell's `PATH`. No NVM, no NodeSource apt repo, no shell-rc edits.
+- **Version resolution** is done against the official `https://nodejs.org/dist/index.json` index. Accepted forms for the `version` option: `lts`, `latest`/`current`, `lts/<codename>` (e.g. `lts/krypton`), `<major>` (e.g. `24`), `<major>.<minor>`, or an exact version with or without a leading `v`.
+- **npm** is pinned with `npm install -g npm@<version>`. The default `latest` always installs the newest published npm.
+- **pnpm** is installed by downloading the official `pnpm/pnpm` GitHub-release binary directly to `/usr/local/bin/pnpm` (this is the standalone-binary path documented at <https://pnpm.io/installation>). No Corepack indirection, no shell-rc edits.
+
+## Feature ordering
+
+Add `common-utils` **before** `node`, since this feature checks its dependencies up front:
+
+```jsonc
+{
+  "image": "mcr.microsoft.com/devcontainers/base:trixie",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/synergy-shock/devcontainer-features/node:0": {
+      "version": "lts",
+      "npmVersion": "latest",
+      "pnpmVersion": "latest"
+    }
+  }
+}
+```
+
+If you already start from `mcr.microsoft.com/devcontainers/base:*`, `common-utils` essentials are baked in; the explicit feature line is still the safest way to guarantee `curl` / `jq` / `tar` regardless of the base image.
