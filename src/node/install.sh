@@ -121,52 +121,47 @@ node --version
 npm --version
 
 # ------------------------------------------------------------------
-# Pin / update npm
+# Pin / update npm — installs into the Node tarball's prefix (/usr/local),
+# overwriting /usr/local/bin/npm.
 # ------------------------------------------------------------------
 echo "==> Installing npm@${NPM_VERSION_OPT}..."
 npm install -g --no-fund --no-audit "npm@${NPM_VERSION_OPT}"
 npm --version
 
 # ------------------------------------------------------------------
-# Install pnpm via the official install script
-# (https://pnpm.io/installation – the get.pnpm.io/install.sh path)
+# Install pnpm via npm. From here on, npm globals live in a dedicated
+# directory exposed on PATH via containerEnv, keeping user-installed
+# globals separate from the Node tarball's /usr/local/bin.
 # ------------------------------------------------------------------
-echo "==> Installing pnpm@${PNPM_VERSION_OPT} via get.pnpm.io/install.sh..."
+export NPM_CONFIG_PREFIX="/usr/local/share/npm-global"
+mkdir -p "${NPM_CONFIG_PREFIX}/bin"
 
+echo "==> Installing pnpm@${PNPM_VERSION_OPT} via npm..."
+# Accept both '10.0.0' and 'v10.0.0' — npm semver wants no leading 'v'.
+PNPM_SPEC="${PNPM_VERSION_OPT#v}"
+npm install -g --no-fund --no-audit "pnpm@${PNPM_SPEC}"
+
+# PNPM_HOME is where pnpm stores globally-installed packages (populated
+# when users later run `pnpm add -g …`). containerEnv puts it on PATH.
 export PNPM_HOME="/usr/local/share/pnpm"
 mkdir -p "${PNPM_HOME}"
 
-# The install script reads PNPM_VERSION (optional) and PNPM_HOME (install
-# target), and consults $SHELL to decide which profile to touch. Set SHELL
-# explicitly so it doesn't bail with "Could not infer shell" under the
-# non-interactive feature build.
-if [ "${PNPM_VERSION_OPT}" = "latest" ]; then
-    curl -fsSL https://get.pnpm.io/install.sh \
-        | env PNPM_HOME="${PNPM_HOME}" SHELL="/bin/bash" sh -
-else
-    # Accept both '10.0.0' and 'v10.0.0' — the install script wants no leading 'v'.
-    PNPM_VER="${PNPM_VERSION_OPT#v}"
-    curl -fsSL https://get.pnpm.io/install.sh \
-        | env PNPM_VERSION="${PNPM_VER}" PNPM_HOME="${PNPM_HOME}" SHELL="/bin/bash" sh -
-fi
-
-# Locate the pnpm binary the install script wrote. pnpm v11+ uses
-# $PNPM_HOME/bin/pnpm; older versions wrote it directly to $PNPM_HOME/pnpm.
-if [ -x "${PNPM_HOME}/bin/pnpm" ]; then
-    PNPM_BIN="${PNPM_HOME}/bin/pnpm"
-elif [ -x "${PNPM_HOME}/pnpm" ]; then
-    PNPM_BIN="${PNPM_HOME}/pnpm"
-else
-    echo "(!) pnpm install did not produce a binary under ${PNPM_HOME}."
-    ls -la "${PNPM_HOME}" || true
-    exit 1
-fi
-
-# Symlink into a directory already on every shell's PATH so the binary is
-# reachable without sourcing the rc-file shim the install script writes.
-ln -sf "${PNPM_BIN}" /usr/local/bin/pnpm
-
+# Make pnpm reachable for the verification call below; persisted to future
+# shells via /etc/profile.d/node.sh, written next.
+export PATH="${NPM_CONFIG_PREFIX}/bin:${PNPM_HOME}:${PATH}"
 pnpm --version
+
+# ------------------------------------------------------------------
+# Persist env vars and PATH additions for future shells.
+# /etc/profile is sourced by login shells; common-utils:2 (a prerequisite)
+# also wires /etc/bash.bashrc to source /etc/profile.d/*.sh.
+# ------------------------------------------------------------------
+cat > /etc/profile.d/node.sh <<'EOF'
+export NPM_CONFIG_PREFIX="/usr/local/share/npm-global"
+export PNPM_HOME="/usr/local/share/pnpm"
+export PATH="${NPM_CONFIG_PREFIX}/bin:${PNPM_HOME}:${PATH}"
+EOF
+chmod 0644 /etc/profile.d/node.sh
 
 echo "==> Node feature installation complete!"
 echo "    node:  $(node --version)"
