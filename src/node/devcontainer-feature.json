@@ -28,7 +28,7 @@
     "pnpmVersion": {
       "type": "string",
       "default": "latest",
-      "description": "pnpm version. Installed by downloading the official pnpm/pnpm GitHub-release binary directly to /usr/local/bin/pnpm. Use 'latest' for the newest, or pin (e.g. '11.2.2').",
+      "description": "pnpm version. Installed via the official 'https://get.pnpm.io/install.sh' script (PNPM_HOME=/usr/local/share/pnpm, symlinked to /usr/local/bin/pnpm). Use 'latest' for the newest, or pin (e.g. '11.2.2').",
       "proposals": ["latest", "11.2.2", "10.0.0", "9.15.9"]
     }
   }

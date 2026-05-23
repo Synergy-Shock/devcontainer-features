@@ -4,7 +4,7 @@ set -e
 #-----------------------------------------------------------------------------------------------------
 # Node.js Dev Container Feature
 # Installs the official Node.js prebuilt binary from https://nodejs.org/dist/, then pins npm
-# (via `npm install -g`) and pnpm (via the official GitHub-release binary from pnpm/pnpm).
+# (via `npm install -g`) and pnpm (via the official install script at https://get.pnpm.io/install.sh).
 #
 # Intended for use on Debian/Ubuntu-based images that already have
 # `ghcr.io/devcontainers/features/common-utils:2` applied (for curl, jq, tar, ca-certificates).
@@ -37,11 +37,9 @@ ARCH=$(uname -m)
 case "${ARCH}" in
     x86_64)
         NODE_ARCH="x64"
-        PNPM_ARCH="x64"
         ;;
     aarch64|arm64)
         NODE_ARCH="arm64"
-        PNPM_ARCH="arm64"
         ;;
     *)
         echo "(!) Architecture ${ARCH} is not supported by this feature."
@@ -130,29 +128,32 @@ npm install -g --no-fund --no-audit "npm@${NPM_VERSION_OPT}"
 npm --version
 
 # ------------------------------------------------------------------
-# Install pnpm directly from the official GitHub release binary
-# (https://pnpm.io/installation – the standalone binary path)
+# Install pnpm via the official install script
+# (https://pnpm.io/installation – the get.pnpm.io/install.sh path)
 # ------------------------------------------------------------------
-echo "==> Resolving pnpm version '${PNPM_VERSION_OPT}'..."
+echo "==> Installing pnpm@${PNPM_VERSION_OPT} via get.pnpm.io/install.sh..."
+
+export PNPM_HOME="/usr/local/share/pnpm"
+mkdir -p "${PNPM_HOME}"
+
+# The install script reads PNPM_VERSION (optional) and PNPM_HOME (install
+# target), and consults $SHELL to decide which profile to touch. Set SHELL
+# explicitly so it doesn't bail with "Could not infer shell" under the
+# non-interactive feature build.
 if [ "${PNPM_VERSION_OPT}" = "latest" ]; then
-    PNPM_TAG=$(curl -fsSL https://api.github.com/repos/pnpm/pnpm/releases/latest | jq -r '.tag_name')
-    if [ -z "${PNPM_TAG}" ] || [ "${PNPM_TAG}" = "null" ]; then
-        echo "(!) Failed to resolve latest pnpm release from api.github.com/repos/pnpm/pnpm/releases/latest"
-        exit 1
-    fi
+    curl -fsSL https://get.pnpm.io/install.sh \
+        | env PNPM_HOME="${PNPM_HOME}" SHELL="/bin/bash" sh -
 else
-    case "${PNPM_VERSION_OPT}" in
-        v*) PNPM_TAG="${PNPM_VERSION_OPT}" ;;
-        *)  PNPM_TAG="v${PNPM_VERSION_OPT}" ;;
-    esac
+    # Accept both '10.0.0' and 'v10.0.0' — the install script wants no leading 'v'.
+    PNPM_VER="${PNPM_VERSION_OPT#v}"
+    curl -fsSL https://get.pnpm.io/install.sh \
+        | env PNPM_VERSION="${PNPM_VER}" PNPM_HOME="${PNPM_HOME}" SHELL="/bin/bash" sh -
 fi
 
-PNPM_URL="https://github.com/pnpm/pnpm/releases/download/${PNPM_TAG}/pnpm-linux-${PNPM_ARCH}.tar.gz"
-echo "==> Downloading ${PNPM_URL}"
-# The tarball ships a self-contained `pnpm` ELF at its top level alongside a
-# `dist/` directory of auxiliary node-script form; we only need the binary.
-curl -fsSL "${PNPM_URL}" | tar -xz -C /usr/local/bin --no-same-owner pnpm
-chmod +x /usr/local/bin/pnpm
+# Symlink into a directory already on every shell's PATH so the binary is
+# reachable without sourcing the rc-file shim the install script writes.
+ln -sf "${PNPM_HOME}/pnpm" /usr/local/bin/pnpm
+
 pnpm --version
 
 echo "==> Node feature installation complete!"

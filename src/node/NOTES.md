@@ -7,7 +7,7 @@ Debian/Ubuntu-based images. The feature does **not** call `apt-get` itself — i
 - **Node.js** is the official Linux prebuilt tarball from `https://nodejs.org/dist/`, extracted into `/usr/local` with `tar --strip-components=1 --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md` so that `node`, `npm`, and `npx` land directly under `/usr/local/bin` — already on every shell's `PATH`. No NVM, no NodeSource apt repo, no shell-rc edits.
 - **Version resolution** is done against the official `https://nodejs.org/dist/index.json` index. Accepted forms for the `version` option: `lts`, `latest`/`current`, `lts/<codename>` (e.g. `lts/krypton`), `<major>` (e.g. `24`), `<major>.<minor>`, or an exact version with or without a leading `v`.
 - **npm** is pinned with `npm install -g npm@<version>`. The default `latest` always installs the newest published npm.
-- **pnpm** is installed by downloading the official `pnpm/pnpm` GitHub-release binary directly to `/usr/local/bin/pnpm` (this is the standalone-binary path documented at <https://pnpm.io/installation>). No Corepack indirection, no shell-rc edits.
+- **pnpm** is installed via the official `https://get.pnpm.io/install.sh` script (documented at <https://pnpm.io/installation>). It runs with `PNPM_HOME=/usr/local/share/pnpm` and the binary is symlinked to `/usr/local/bin/pnpm` so it lands on every shell's `PATH` without needing the rc-file shim. The `pnpmVersion` option is passed via the `PNPM_VERSION` env var (omitted when set to `latest`). No Corepack indirection.
 
 ## Feature ordering
 
