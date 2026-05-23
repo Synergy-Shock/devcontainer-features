@@ -1,5 +1,15 @@
 {
   "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "version": "2.5.9",
+      "resolved": "ghcr.io/devcontainers/features/common-utils@sha256:cb0c4d3c276f157eed17935747e364178d75fee17f55c4e129966f64633deb3a",
+      "integrity": "sha256:cb0c4d3c276f157eed17935747e364178d75fee17f55c4e129966f64633deb3a"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "1.3.5",
+      "resolved": "ghcr.io/devcontainers/features/git@sha256:27905dc196c01f77d6ba8709cb82eeaf330b3b108772e2f02d1cd0d826de1251",
+      "integrity": "sha256:27905dc196c01f77d6ba8709cb82eeaf330b3b108772e2f02d1cd0d826de1251"
+    },
     "ghcr.io/synergy-shock/devcontainer-features/claude:2": {
       "version": "2.1.145",
       "resolved": "ghcr.io/synergy-shock/devcontainer-features/claude@sha256:4ad94850485d53ec0a7ccf1fbef5e48286dde8be1811bdb926434637085e0c4e",
@@ -10,10 +20,10 @@
       "resolved": "ghcr.io/synergy-shock/devcontainer-features/gitbutler@sha256:28e79b97e473e948f1d4ff8d35690ef1191f1f0bf2bb3f0df398bfb507b16ae2",
       "integrity": "sha256:28e79b97e473e948f1d4ff8d35690ef1191f1f0bf2bb3f0df398bfb507b16ae2"
     },
-    "ghcr.io/synergy-shock/devcontainer-features/pnpm:11": {
-      "version": "11.0.0",
-      "resolved": "ghcr.io/synergy-shock/devcontainer-features/pnpm@sha256:9ad82ac4ab3b0cf1d8422adbfd09ce61b12d99acd21d5083718ee55c87d9a2f9",
-      "integrity": "sha256:9ad82ac4ab3b0cf1d8422adbfd09ce61b12d99acd21d5083718ee55c87d9a2f9"
+    "ghcr.io/synergy-shock/devcontainer-features/node:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/synergy-shock/devcontainer-features/node@sha256:bcc652d2dd44d71e63a665e419369ad017d936f023fa41f35d7fe3d2a4fb9a48",
+      "integrity": "sha256:bcc652d2dd44d71e63a665e419369ad017d936f023fa41f35d7fe3d2a4fb9a48"
     },
     "ghcr.io/synergy-shock/devcontainer-features/rtk:0": {
       "version": "0.1.0",

@@ -4,8 +4,7 @@
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {},
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/git-lfs:1": {},
-    "ghcr.io/devcontainers/features/node:2": {
+    "ghcr.io/synergy-shock/devcontainer-features/node:1": {
       "version": "24",
       "npmVersion": "latest",
       "pnpmVersion": "latest",
