@@ -1,0 +1,35 @@
+{
+  "id": "node",
+  "version": "1.0.0",
+  "name": "Node.js",
+  "description": "Installs Node.js from the official nodejs.org prebuilt binaries, with optional npm and pnpm pinning. Assumes 'ghcr.io/devcontainers/features/common-utils:2' has run.",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/node",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "lts",
+      "description": "Node.js version. 'lts' (default), 'latest'/'current', an lts codename ('lts/krypton'), a major ('24'), a major.minor ('24.16'), or an exact version ('24.16.0' / 'v24.16.0').",
+      "proposals": [
+        "lts",
+        "latest",
+        "lts/krypton",
+        "lts/jod",
+        "lts/iron",
+        "26",
+        "24"
+      ]
+    },
+    "npmVersion": {
+      "type": "string",
+      "default": "latest",
+      "description": "npm version (passed to 'npm install -g npm@<value>'). Use 'latest' for the newest, or pin (e.g. '11.15.0').",
+      "proposals": ["latest", "11.15.0", "10.9.0"]
+    },
+    "pnpmVersion": {
+      "type": "string",
+      "default": "latest",
+      "description": "pnpm version (passed to 'npm install -g pnpm@<value>'). Installed into NPM_CONFIG_PREFIX=/usr/local/share/npm-global, which is added to PATH via /etc/profile.d/node.sh. Use 'latest' for the newest, or pin (e.g. '11.2.2').",
+      "proposals": ["latest", "11.2.2", "10.0.0", "9.15.9"]
+    }
+  }
+}

@@ -12,5 +12,12 @@
                 "version": "2.1.145"
             }
         }
+    },
+    "non_root_user": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "remoteUser": "vscode",
+        "features": {
+            "claude": {}
+        }
     }
 }

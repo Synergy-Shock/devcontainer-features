@@ -1,0 +1,37 @@
+{
+    "default": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "node": {}
+        }
+    },
+    "pinned_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "node": {
+                "version": "24.16.0",
+                "npmVersion": "11.15.0",
+                "pnpmVersion": "11.2.2"
+            }
+        }
+    },
+    "lts_codename": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "node": {
+                "version": "lts/krypton"
+            }
+        }
+    },
+    "non_root_user": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "remoteUser": "vscode",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "node": {}
+        }
+    }
+}

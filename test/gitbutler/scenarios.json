@@ -1,8 +1,15 @@
 {
-    "default": {
-        "image": "mcr.microsoft.com/devcontainers/base:trixie",
-        "features": {
-            "gitbutler": {}
-        }
+  "default": {
+    "image": "mcr.microsoft.com/devcontainers/base:trixie",
+    "features": {
+      "gitbutler": {}
     }
+  },
+  "non_root_user": {
+    "image": "mcr.microsoft.com/devcontainers/base:trixie",
+    "remoteUser": "vscode",
+    "features": {
+      "gitbutler": {}
+    }
+  }
 }

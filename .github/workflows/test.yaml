@@ -14,14 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # pnpm requires Node — only typescript-node:24 has it.
-          - feature: pnpm
-            base-image: mcr.microsoft.com/devcontainers/typescript-node:24-trixie
-          - feature: pnpm
-            base-image: mcr.microsoft.com/devcontainers/typescript-node:24-bookworm
-          - feature: pnpm
-            base-image: mcr.microsoft.com/devcontainers/typescript-node:24-bullseye
-
           # claude / gitbutler / opencode are Node-less — test on the bare base
           # across all current Debian + Ubuntu LTS releases.
           - feature: claude
@@ -61,6 +53,22 @@ jobs:
             base-image: mcr.microsoft.com/devcontainers/base:jammy
           - feature: opencode
             base-image: mcr.microsoft.com/devcontainers/base:focal
+
+          # node uses the official Linux prebuilt tarball; Node 24 LTS requires
+          # glibc >= 2.28, which is satisfied by all six base images (focal and
+          # bullseye both ship glibc 2.31).
+          - feature: node
+            base-image: mcr.microsoft.com/devcontainers/base:trixie
+          - feature: node
+            base-image: mcr.microsoft.com/devcontainers/base:bookworm
+          - feature: node
+            base-image: mcr.microsoft.com/devcontainers/base:bullseye
+          - feature: node
+            base-image: mcr.microsoft.com/devcontainers/base:noble
+          - feature: node
+            base-image: mcr.microsoft.com/devcontainers/base:jammy
+          - feature: node
+            base-image: mcr.microsoft.com/devcontainers/base:focal
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -95,7 +103,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        feature: [claude, gitbutler, opencode, pnpm]
+        feature: [claude, gitbutler, opencode, node]
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6

@@ -4,5 +4,12 @@
         "features": {
             "rtk": {}
         }
+    },
+    "non_root_user": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "remoteUser": "vscode",
+        "features": {
+            "rtk": {}
+        }
     }
 }

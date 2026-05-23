@@ -1,4 +1,4 @@
-FEATURES     ?= claude,gitbutler,opencode,pnpm
+FEATURES     ?= claude,gitbutler,opencode,rtk
 BASE_IMAGE   ?= mcr.microsoft.com/devcontainers/typescript-node:24-trixie
 BASE_PATH    ?= ./src
 OCI_REGISTRY ?= ghcr.io
