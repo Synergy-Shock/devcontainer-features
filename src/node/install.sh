@@ -141,6 +141,11 @@ echo "==> Installing pnpm@${PNPM_VERSION_OPT} via npm..."
 PNPM_SPEC="${PNPM_VERSION_OPT#v}"
 npm install -g --no-fund --no-audit "pnpm@${PNPM_SPEC}"
 
+# Symlink pnpm into /usr/local/bin so it is reachable from any shell even
+# before /etc/profile.d/node.sh is sourced (matches npm's own /usr/local/bin/npm
+# symlink that the Node tarball ships).
+ln -sf "${NPM_CONFIG_PREFIX}/bin/pnpm" /usr/local/bin/pnpm
+
 # PNPM_HOME is where pnpm stores globally-installed packages (populated
 # when users later run `pnpm add -g …`). containerEnv puts it on PATH.
 export PNPM_HOME="/usr/local/share/pnpm"
