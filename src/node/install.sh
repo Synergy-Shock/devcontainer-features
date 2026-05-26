@@ -130,13 +130,26 @@ npm --version
 
 # ------------------------------------------------------------------
 # Install pnpm via npm. From here on, npm globals live in a dedicated
-# directory exposed on PATH via containerEnv, keeping user-installed
-# globals separate from the Node tarball's /usr/local/bin.
+# directory exposed on PATH via /etc/profile.d/node.sh, keeping
+# user-installed globals separate from the Node tarball's /usr/local/bin.
+#
+# When a non-root remote user is configured, the dirs live under their HOME
+# (XDG-style) so non-root `pnpm install` can write the SQLite store index
+# (WAL files) without "readonly database". Otherwise they land system-wide
+# under /usr/local/share.
 # ------------------------------------------------------------------
-export NPM_CONFIG_PREFIX="/usr/local/share/npm-global"
-mkdir -p "${NPM_CONFIG_PREFIX}/bin"
+if [ -n "${_REMOTE_USER:-}" ] && [ "${_REMOTE_USER}" != "root" ]; then
+    REMOTE_USER_HOME="${_REMOTE_USER_HOME:-/home/${_REMOTE_USER}}"
+    NPM_CONFIG_PREFIX="${REMOTE_USER_HOME}/.local/share/npm-global"
+    PNPM_HOME="${REMOTE_USER_HOME}/.local/share/pnpm"
+else
+    NPM_CONFIG_PREFIX="/usr/local/share/npm-global"
+    PNPM_HOME="/usr/local/share/pnpm"
+fi
+export NPM_CONFIG_PREFIX PNPM_HOME
+mkdir -p "${NPM_CONFIG_PREFIX}/bin" "${PNPM_HOME}"
 
-echo "==> Installing pnpm@${PNPM_VERSION_OPT} via npm..."
+echo "==> Installing pnpm@${PNPM_VERSION_OPT} via npm into ${NPM_CONFIG_PREFIX}..."
 # Accept both '10.0.0' and 'v10.0.0' — npm semver wants no leading 'v'.
 PNPM_SPEC="${PNPM_VERSION_OPT#v}"
 npm install -g --no-fund --no-audit "pnpm@${PNPM_SPEC}"
@@ -146,11 +159,6 @@ npm install -g --no-fund --no-audit "pnpm@${PNPM_SPEC}"
 # symlink that the Node tarball ships).
 ln -sf "${NPM_CONFIG_PREFIX}/bin/pnpm" /usr/local/bin/pnpm
 
-# PNPM_HOME is where pnpm stores globally-installed packages (populated
-# when users later run `pnpm add -g …`). containerEnv puts it on PATH.
-export PNPM_HOME="/usr/local/share/pnpm"
-mkdir -p "${PNPM_HOME}"
-
 # Make pnpm reachable for the verification call below; persisted to future
 # shells via /etc/profile.d/node.sh, written next.
 export PATH="${NPM_CONFIG_PREFIX}/bin:${PNPM_HOME}:${PATH}"
@@ -158,18 +166,19 @@ pnpm --version
 
 # Hand the global npm/pnpm trees to the remote user so non-root pnpm operations
 # can write SQLite state (store index, WAL files) without "readonly database".
-chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${NPM_CONFIG_PREFIX}"
-chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${PNPM_HOME}"
+if [ -n "${_REMOTE_USER:-}" ] && [ "${_REMOTE_USER}" != "root" ]; then
+    chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${NPM_CONFIG_PREFIX}" "${PNPM_HOME}"
+fi
 
 # ------------------------------------------------------------------
 # Persist env vars and PATH additions for future shells.
 # /etc/profile is sourced by login shells; common-utils:2 (a prerequisite)
 # also wires /etc/bash.bashrc to source /etc/profile.d/*.sh.
 # ------------------------------------------------------------------
-cat > /etc/profile.d/node.sh <<'EOF'
-export NPM_CONFIG_PREFIX="/usr/local/share/npm-global"
-export PNPM_HOME="/usr/local/share/pnpm"
-export PATH="${NPM_CONFIG_PREFIX}/bin:${PNPM_HOME}:${PATH}"
+cat > /etc/profile.d/node.sh <<EOF
+export NPM_CONFIG_PREFIX="${NPM_CONFIG_PREFIX}"
+export PNPM_HOME="${PNPM_HOME}"
+export PATH="\${NPM_CONFIG_PREFIX}/bin:\${PNPM_HOME}:\${PATH}"
 EOF
 chmod 0644 /etc/profile.d/node.sh
 
