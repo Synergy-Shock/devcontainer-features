@@ -1,6 +1,6 @@
 {
   "id": "node",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "Node.js",
   "description": "Installs Node.js from the official nodejs.org prebuilt binaries, with optional npm and pnpm pinning. Assumes 'ghcr.io/devcontainers/features/common-utils:2' has run.",
   "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/node",
