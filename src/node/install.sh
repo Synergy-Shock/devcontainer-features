@@ -156,6 +156,11 @@ mkdir -p "${PNPM_HOME}"
 export PATH="${NPM_CONFIG_PREFIX}/bin:${PNPM_HOME}:${PATH}"
 pnpm --version
 
+# Hand the global npm/pnpm trees to the remote user so non-root pnpm operations
+# can write SQLite state (store index, WAL files) without "readonly database".
+chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${NPM_CONFIG_PREFIX}"
+chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${PNPM_HOME}"
+
 # ------------------------------------------------------------------
 # Persist env vars and PATH additions for future shells.
 # /etc/profile is sourced by login shells; common-utils:2 (a prerequisite)
