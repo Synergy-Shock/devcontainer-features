@@ -53,4 +53,15 @@ curl -fsSL -o "${BUT_BIN}" "${BUT_URL}"
 chmod +x "${BUT_BIN}"
 "${BUT_BIN}" --version
 
+if [ -n "${_REMOTE_USER:-}" ] && [ "${_REMOTE_USER}" != "root" ]; then
+    REMOTE_USER_HOME="${_REMOTE_USER_HOME:-/home/${_REMOTE_USER}}"
+    GITBUTLER_DATA_DIR="${REMOTE_USER_HOME}/.local/share/com.gitbutler.app"
+    echo "==> Pre-creating ${GITBUTLER_DATA_DIR} for ${_REMOTE_USER}..."
+    mkdir -p "${GITBUTLER_DATA_DIR}"
+    chown -R "${_REMOTE_USER}:${_REMOTE_USER}" \
+        "${REMOTE_USER_HOME}/.local" \
+        "${REMOTE_USER_HOME}/.local/share" \
+        "${GITBUTLER_DATA_DIR}"
+fi
+
 echo "==> GitButler feature installation complete!"
