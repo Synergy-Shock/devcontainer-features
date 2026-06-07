@@ -25,6 +25,11 @@
       "resolved": "ghcr.io/synergy-shock/devcontainer-features/node@sha256:bcc652d2dd44d71e63a665e419369ad017d936f023fa41f35d7fe3d2a4fb9a48",
       "integrity": "sha256:bcc652d2dd44d71e63a665e419369ad017d936f023fa41f35d7fe3d2a4fb9a48"
     },
+    "ghcr.io/synergy-shock/devcontainer-features/opencode:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/synergy-shock/devcontainer-features/opencode@sha256:603e8087344006d0055152e7d70a7dcfcc6f610b011da87723c71763867fea2b",
+      "integrity": "sha256:603e8087344006d0055152e7d70a7dcfcc6f610b011da87723c71763867fea2b"
+    },
     "ghcr.io/synergy-shock/devcontainer-features/rtk:0": {
       "version": "0.1.0",
       "resolved": "ghcr.io/synergy-shock/devcontainer-features/rtk@sha256:69779045064cdc8a6d92461949d15974d0e19bc78d0f2b791969d5d719f392d4",
