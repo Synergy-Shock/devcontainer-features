@@ -14,6 +14,24 @@ fi
 
 OPENCODE_VERSION="${VERSION:-latest}"
 
+# ------------------------------------------------------------------
+# Resolve the target user and home directory.
+# The dev container CLI normally injects _REMOTE_USER / _REMOTE_USER_HOME,
+# but they can be empty depending on the build context — derive sane
+# fallbacks so chown/mkdir never run against an empty path.
+# ------------------------------------------------------------------
+if [ -z "${_REMOTE_USER}" ]; then
+    _REMOTE_USER="$(id -un 1000 2>/dev/null || echo root)"
+fi
+
+if [ -z "${_REMOTE_USER_HOME}" ]; then
+    _REMOTE_USER_HOME="$(getent passwd "${_REMOTE_USER}" | cut -d: -f6)"
+fi
+
+if [ -z "${_REMOTE_USER_HOME}" ]; then
+    _REMOTE_USER_HOME="$([ "${_REMOTE_USER}" = "root" ] && echo /root || echo "/home/${_REMOTE_USER}")"
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
@@ -34,8 +52,8 @@ opencode --version
 echo "==> Adjusting permissions for ${_REMOTE_USER} user..."
 chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${OPENCODE_INSTALL_HOME}" 2>/dev/null || true
 
-echo "==> Pre-creating XDG directories for ${_REMOTE_USER} user..."
+echo "==> Pre-creating XDG directories for ${_REMOTE_USER} user (home: ${_REMOTE_USER_HOME})..."
 mkdir -p "${_REMOTE_USER_HOME}/.config" "${_REMOTE_USER_HOME}/.local"
-chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${_REMOTE_USER_HOME}"
+chown "${_REMOTE_USER}:${_REMOTE_USER}" "${_REMOTE_USER_HOME}" "${_REMOTE_USER_HOME}/.config" "${_REMOTE_USER_HOME}/.local" 2>/dev/null || true
 
 echo "==> OpenCode feature installation complete!"
