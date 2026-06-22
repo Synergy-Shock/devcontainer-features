@@ -1,0 +1,15 @@
+{
+  "id": "fresh",
+  "version": "1.0.0",
+  "name": "Fresh (Terminal IDE)",
+  "description": "Installs the Fresh terminal text editor / IDE from the official sinelaw/fresh GitHub release as a static musl prebuilt binary. Assumes 'ghcr.io/devcontainers/features/common-utils:2' has run.",
+  "documentationURL": "https://github.com/Synergy-Shock/devcontainer-features/tree/main/src/fresh",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "latest",
+      "description": "Fresh version. 'latest' (default) resolves the newest GitHub release, or pin an exact version ('0.4.1' / 'v0.4.1').",
+      "proposals": ["latest", "0.4.1"]
+    }
+  }
+}
