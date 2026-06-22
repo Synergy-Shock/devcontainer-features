@@ -1,0 +1,26 @@
+{
+    "default": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "fresh": {}
+        }
+    },
+    "pinned_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "fresh": {
+                "version": "0.4.1"
+            }
+        }
+    },
+    "non_root_user": {
+        "image": "mcr.microsoft.com/devcontainers/base:trixie",
+        "remoteUser": "vscode",
+        "features": {
+            "ghcr.io/devcontainers/features/common-utils:2": {},
+            "fresh": {}
+        }
+    }
+}
