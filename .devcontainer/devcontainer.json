@@ -15,6 +15,7 @@
     "ghcr.io/synergy-shock/devcontainer-features/gitbutler:0": {},
   },
   "mounts": [
+    "source=devcontainerstore,target=/home/node/.local,type=volume",
     "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind",
     "source=${localEnv:HOME}/.claude.json,target=/home/node/.claude.json,type=bind",
     "source=${localEnv:HOME}/.config/opencode,target=/home/node/.config/opencode,type=bind",
